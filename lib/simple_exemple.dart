@@ -35,10 +35,13 @@ class _MyChartState extends State<MyChart> {
 
   @override
   Widget build(BuildContext context) {
+
+    
     return Center(
       child: PieChart(PieChartData(
         sections: getSections(),
       )),
     );
   }
-}
+} 
+
