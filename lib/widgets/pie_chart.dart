@@ -41,83 +41,52 @@ class PieChartWidgetState extends State<PieChartWidget> {
 }
 
 //Lista de sessão
+
+//Deixando o grafico dinamico...
+
+/**
+ * Para deixar o gráfico mais dinanmico basta ler 
+ * uma lista de informações, no caso do exemplo abaixo eu criei uma lista
+ * com 5 posições.
+ * e uma lista de cores referente a cada cor de cada porcentagem.
+ * Ao gerar nossa Lista, passamos como parametro o tamanho dinamico de nossa lista
+ * e uma variavel index (i) que será renderizado cada sessão do noss gráfico.
+ * Pronto , agora criamos duas variaveis para receber o valor de cada index da lista
+ * e em "value", na configuração do gráfico, passamos essa variável e temos nossas
+ * sessões prontas para uso. A mesma coisa funciona com as cores.
+ */
 List<PieChartSectionData> showingSections() {
+  List<double> myNumbers = [2, 3, 6, 30, 50]; // Lista de numeros para o gráfico
+  //Lista de cores para cada sessão do gráfico
+  List<Color> myColorsList = [
+    Colors.blue,
+    Colors.green,
+    Colors.pink,
+    Colors.orange,
+    Colors.grey
+  ];
+  double porcentagem = 0; //variável que receberá cada numero da lista
+  Color myColors = Colors.white; //variável que recebera cada cor da lista
   return List.generate(
-    4, //quantidade de sessões (tamanho da sua lista)
+    myNumbers.length, //quantidade de sessões (tamanho da sua lista)
     (i) {
       // index da sua lista
 
+      porcentagem = myNumbers[i]; //variável recebendo cada numero 
+      myColors = myColorsList[i];//variável recebendo cada cor 
       final isTouched = i == touchedIndex; // verifica qual index foi clicado
+
       final opacity = isTouched ? 1.0 : 0.6;
       const color0 = Color(0xff0293ee);
       const color1 = Color(0xfff8b250);
       const color2 = Color(0xff845bef);
       const color3 = Color(0xff13d38e);
 
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: color0.withOpacity(opacity),
-            value: 25,
-            title: '25%',
-            radius: isTouched ? 90 : radius,
-            titleStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff044d7c)),
-            titlePositionPercentageOffset: 0.55,
-            borderSide: isTouched
-                ? BorderSide(color: color0, width: 6)
-                : BorderSide(color: color0.withOpacity(0)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: color1.withOpacity(opacity),
-            value: 25,
-            title: '25%',
-            radius: isTouched ? 90 : radius,
-            titleStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff90672d)),
-            titlePositionPercentageOffset: 0.55,
-            borderSide: isTouched
-                ? BorderSide(color: color1, width: 6)
-                : BorderSide(color: color2.withOpacity(0)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: color2.withOpacity(opacity),
-            value: 25,
-            title: '25%',
-            radius: isTouched ? 90 : radius,
-            titleStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff4c3788)),
-            titlePositionPercentageOffset: 0.6,
-            borderSide: isTouched
-                ? BorderSide(color: color2, width: 6)
-                : BorderSide(color: color2.withOpacity(0)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: color3.withOpacity(opacity),
-            value: 25,
-            title: '25%',
-            radius: isTouched ? 90 : radius,
-            titleStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff0c7f55)),
-            titlePositionPercentageOffset: 0.55,
-            borderSide: isTouched
-                ? BorderSide(color: color3, width: 6)
-                : BorderSide(color: color2.withOpacity(0)),
-          );
-        default: // caso não tenha nada
-          throw Error();
-      }
+      return PieChartSectionData(
+        value: porcentagem,
+        color: myColors,
+        radius: isTouched ? 60 : 50
+      );
     },
   );
 }
